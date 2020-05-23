@@ -50,8 +50,9 @@ namespace WebApplication.Memcached.Controllers
         public async Task<IActionResult> Get([FromQuery] string value)
         {
             var valueResult = await _cacheProvider.Get<WeatherForecast>(value);
+            if (valueResult is null)
+                return NoContent();
 
-            //return Ok(JsonSerializer.Deserialize<WeatherForecast>(valueResult));
             return Ok(valueResult);
         }
     }
