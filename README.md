@@ -5,13 +5,16 @@ Um simples exemplo de como utilizar o Memcached em aplicações ASP.NET Core.
 
 ## O que é o Memcached
 O Memcached é um banco de dados chave e valor de código aberto e alto desempenho, de memória distribuída, destinado a acelerar aplicações Web, aliviando a carga do banco de dados.
-https://memcached.org/
+
+Para mais informações consultar o site: https://memcached.org/
 
 ## Docker
-Para o exemplo foi usada a imagem do Memcached, para rodar o container, seguir o comando: `docker run -p 11211:11211 -d memcached`
+Para o exemplo foi usada a imagem do Memcached, para rodar o container, seguir o comando:
+
+`docker run -p 11211:11211 -d memcached`
 
 ## Packages
-A aplicação faz uso do package `EnyimMemcachedCore`
+A aplicação faz uso do NuGet package `EnyimMemcachedCore`
 https://www.nuget.org/packages/EnyimMemcachedCore/
 
 
