@@ -5,12 +5,13 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F97C470D-6FD4-45D9-B1ED-2D60B458A779}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication.Memcached", "src\WebApplication.Memcached\WebApplication.Memcached.csproj", "{C4790ED2-51BD-4C18-9F60-623C11EF2EAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication.Memcached", "src\WebApplication.Memcached\WebApplication.Memcached.csproj", "{C4790ED2-51BD-4C18-9F60-623C11EF2EAD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{613C775D-8184-4B79-9347-E06B582E9C93}"
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
