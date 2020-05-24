@@ -49,11 +49,14 @@ Caso não seja definido a configuração abaixo no appSettings, a aplicação ir
 
         private static Server CreateServerConfig(IServiceCollection services)
         {
+            const int PORT_DEFAULT = 11211;
+            const string ADDRESS_DEFAULT = "localhost";
+
             var sp = services.BuildServiceProvider();
             IOptions<MemcachedSettings> memcachedSettings = sp.GetService<IOptions<MemcachedSettings>>();
 
-            if (memcachedSettings is null)
-                return new Server { Address = "localhost", Port = 11211 };
+            if (memcachedSettings.Value is null)
+                return new Server { Address = ADDRESS_DEFAULT, Port = PORT_DEFAULT };
 
             return new Server { Address = memcachedSettings.Value.Address, Port = memcachedSettings.Value.Port };
         }
