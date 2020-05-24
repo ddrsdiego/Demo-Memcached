@@ -50,9 +50,7 @@ namespace WebApplication.Memcached.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] string value)
         {
-            var test = await _cacheProvider.GetValueOrCreate(value, async () => await _weatherForecastRespository.Get(value));
-
-            var cacheItem = await _cacheProvider.Get<WeatherForecast>(value);
+            var cacheItem = await _cacheProvider.GetValueOrCreate(value, async () => await _weatherForecastRespository.Get(value));
             if (cacheItem is null)
                 return NoContent();
 
