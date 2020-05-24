@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApplication.Memcached.Infra;
 
 namespace WebApplication.Memcached
 {
@@ -19,6 +20,7 @@ namespace WebApplication.Memcached
         {
             services.AddControllers();
             services.Configure<MemcachedSettings>(Configuration.GetSection(nameof(MemcachedSettings)));
+            services.AddTransient<IWeatherForecastRespository, WeatherForecastRespository>();
             services.AddMemcached(Configuration);
         }
 
@@ -34,6 +36,7 @@ namespace WebApplication.Memcached
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseEnyimMemcached();
 
             app.UseEndpoints(endpoints =>
             {

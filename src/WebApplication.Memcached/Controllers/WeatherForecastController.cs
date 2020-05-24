@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication.Memcached.Infra;
 
 namespace WebApplication.Memcached.Controllers
 {
@@ -17,15 +18,15 @@ namespace WebApplication.Memcached.Controllers
 
         private readonly ICacheProvider _cacheProvider;
         private readonly ICacheRepository _cacheRepository;
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IWeatherForecastRespository _weatherForecastRespository;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger,
-                                         ICacheProvider cacheProvider,
-                                         ICacheRepository cacheRepository)
+        public WeatherForecastController(ICacheProvider cacheProvider,
+                                         ICacheRepository cacheRepository,
+                                         IWeatherForecastRespository weatherForecastRespository)
         {
-            _logger = logger;
             _cacheProvider = cacheProvider;
             _cacheRepository = cacheRepository;
+            _weatherForecastRespository = weatherForecastRespository;
         }
 
         [HttpPost]
@@ -49,11 +50,13 @@ namespace WebApplication.Memcached.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] string value)
         {
-            var valueResult = await _cacheProvider.Get<WeatherForecast>(value);
-            if (valueResult is null)
+            var test = await _cacheProvider.GetValueOrCreate(value, async () => await _weatherForecastRespository.Get(value));
+
+            var cacheItem = await _cacheProvider.Get<WeatherForecast>(value);
+            if (cacheItem is null)
                 return NoContent();
 
-            return Ok(valueResult);
+            return Ok(cacheItem);
         }
     }
 }

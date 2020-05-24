@@ -9,7 +9,9 @@ namespace WebApplication.Memcached
     {
         ValueTask<T> Get<T>(string key);
 
-        ValueTask<IEnumerable<T>> Get<T>(IEnumerable<string> keys);
+        ValueTask<T> GetValueOrCreate<T>(string key, Func<Task<T>> func);
+
+        ValueTask<IDictionary<string, T>> Get<T>(IEnumerable<string> keys);
     }
 
     public class CacheProvider : ICacheProvider
@@ -24,12 +26,12 @@ namespace WebApplication.Memcached
         public async ValueTask<T> Get<T>(string key)
         {
             var valueResult = await _memcachedClient.GetAsync<T>(key);
-            return valueResult.Value;
+
+            return valueResult.HasValue ? valueResult.Value : default;
         }
 
-        public ValueTask<IEnumerable<T>> Get<T>(IEnumerable<string> keys)
-        {
-            throw new NotImplementedException();
-        }
+        public async ValueTask<IDictionary<string, T>> Get<T>(IEnumerable<string> keys) => await _memcachedClient.GetAsync<T>(keys);
+
+        public async ValueTask<T> GetValueOrCreate<T>(string key, Func<Task<T>> func) => await _memcachedClient.GetValueOrCreateAsync(key, 600, func);
     }
 }
